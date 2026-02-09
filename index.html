@@ -4,60 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tohoku Univ. CFC Portal NEXT</title>
+    <title>東北大学 研究基盤利用ポータル | NEXT GENERATION</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Noto Sans JP', sans-serif;
-            background-color: #fdfdff;
+        body { font-family: 'Noto Sans JP', sans-serif; background-color: #fdfdff; }
+        .hagi-purple { color: #522d80; } /* 東北大学公式カラー：萩紫 */
+        .bg-hagi-purple { background-color: #522d80; }
+        .gradient-text { background: linear-gradient(90deg, #522d80, #9333ea); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .card-item { transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); }
+        .card-hidden { opacity: 0; transform: scale(0.9) translateY(40px); pointer-events: none; position: absolute; }
+        .glass-nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+        .ai-shadow { box-shadow: 0 10px 40px -10px rgba(82, 45, 128, 0.2); }
+        
+        /* ハンバーガーメニュー用のスタイル */
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out;
+            transform: translateY(-100%);
         }
-
-        .hagi-purple {
-            color: #522d80;
-        }
-
-        /* 東北大学カラー：萩紫 */
-        .bg-hagi-purple {
-            background-color: #522d80;
-        }
-
-        .gradient-text {
-            background: linear-gradient(90deg, #522d80, #9333ea);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-
-        .reveal.active {
-            opacity: 1;
+        #mobile-menu.active {
             transform: translateY(0);
-        }
-
-        .card-item {
-            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        .card-hidden {
-            opacity: 0;
-            transform: scale(0.9) translateY(40px);
-            pointer-events: none;
-            position: absolute;
-        }
-
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .ai-shadow {
-            box-shadow: 0 10px 40px -10px rgba(82, 45, 128, 0.2);
         }
     </style>
 </head>
@@ -65,9 +33,9 @@
 <body class="text-slate-900">
 
     <nav class="glass-nav sticky top-0 z-50">
-        <div class="container mx-auto px-8 py-4 flex justify-between items-center">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-4">
-                <div class="w-10 h-10 bg-hagi-purple rounded-xl flex items-center justify-center">
+                <div class="w-10 h-10 bg-hagi-purple rounded-xl flex items-center justify-center shadow-lg">
                     <span class="text-white font-black text-sm">CFC</span>
                 </div>
                 <div>
@@ -75,43 +43,55 @@
                     <p class="text-[9px] font-bold text-slate-400 tracking-widest uppercase">Core Facility Center</p>
                 </div>
             </div>
-            <div class="hidden lg:flex space-x-10 text-sm font-bold items-center">
+            
+            <div class="hidden lg:flex space-x-8 text-sm font-bold items-center">
                 <a href="#search" class="hover:text-purple-700 transition">装置検索</a>
-                <a href="#insights" class="hover:text-purple-700 transition">研究成果・最新設備</a>
+                <a href="#insights" class="hover:text-purple-700 transition">研究成果</a>
                 <a href="#consult" class="hover:text-purple-700 transition">技術相談</a>
-                <a href="#"
-                    class="bg-hagi-purple text-white px-6 py-2.5 rounded-full hover:bg-black transition shadow-lg">ASUログイン</a>
+                <a href="https://share.cfc.tohoku.ac.jp/share/" target="_blank"
+                    class="bg-hagi-purple text-white px-6 py-2.5 rounded-full hover:bg-black transition shadow-lg">設備統合管理システムログイン</a>
             </div>
+
+            <button id="menu-btn" class="lg:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none">
+                <span class="w-6 h-0.5 bg-slate-900"></span>
+                <span class="w-6 h-0.5 bg-slate-900"></span>
+                <span class="w-6 h-0.5 bg-slate-900"></span>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="fixed top-[72px] left-0 w-full bg-white shadow-xl z-40 p-8 flex flex-col space-y-6 lg:hidden font-bold">
+            <a href="#search" class="text-lg" onclick="toggleMenu()">装置検索</a>
+            <a href="#insights" class="text-lg" onclick="toggleMenu()">研究成果</a>
+            <a href="#consult" class="text-lg" onclick="toggleMenu()">技術相談</a>
+            <a href="https://share.cfc.tohoku.ac.jp/share/" target="_blank" class="text-hagi-purple text-lg">設備統合管理システムログイン</a>
         </div>
     </nav>
 
-    <section class="relative pt-20 pb-32 overflow-hidden bg-white">
+    <section class="relative pt-16 pb-24 md:pt-20 md:pb-32 overflow-hidden bg-white">
         <div class="container mx-auto px-8 relative z-10">
             <div class="max-w-3xl reveal active">
                 <div class="inline-flex items-center space-x-2 bg-purple-50 px-3 py-1.5 rounded-full mb-6">
                     <span class="relative flex h-2 w-2">
-                        <span
-                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
                     </span>
-                    <span class="text-[10px] font-black text-purple-700 uppercase tracking-widest">Next Generation
-                        Portal</span>
+                    <span class="text-[10px] font-black text-purple-700 uppercase tracking-widest">Next Generation Portal</span>
                 </div>
-                <h2 class="text-6xl md:text-8xl font-black mb-8 tracking-tighter leading-none">
-                    研究を、<br><span class="gradient-text">爆速に。</span>
+                <h2 class="text-5xl md:text-8xl font-black mb-8 tracking-tighter leading-none">
+                    その仮説を、<br><span class="gradient-text">確信に変える。</span>
                 </h2>
                 <p class="text-slate-500 text-lg md:text-xl mb-12 leading-relaxed max-w-xl font-medium">
-                    「どの装置」が最適か。<br>
-                    東北大学なら、あなたの仮説を最強のデータに変える「最短ルート」をご提案します。
+                    東北大学の膨大な研究基盤。どれを使うのが正解か？<br>
+                    戦略的技術参謀（AI）が、あなたの研究を加速させる「最短ルート」をご提案します。
                 </p>
                 <div class="flex flex-wrap gap-5">
+                    <a href="https://gemini.google.com/gem/17o6CxfOldR2R34iP-dxj569wuZ57mHAX?usp=sharing" target="_blank"
+                        class="bg-slate-900 text-white px-8 py-5 rounded-2xl font-black text-base md:text-lg hover:bg-hagi-purple hover:scale-105 transition-all ai-shadow flex items-center">
+                        <span class="mr-3">🧠 使いたい機器の絞り込み(学内用)</span>
+                    </a>
                     <button
-                        class="bg-slate-900 text-white px-10 py-5 rounded-2xl font-black text-lg hover:bg-hagi-purple hover:scale-105 transition-all ai-shadow flex items-center">
-                        <span class="mr-3">🧠 技術参謀に相談する</span>
-                    </button>
-                    <button
-                        class="bg-white border-2 border-slate-100 text-slate-400 px-10 py-5 rounded-2xl font-black text-lg hover:border-purple-200 hover:text-purple-600 transition-all">
-                        初めての方へ
+                        class="bg-white border-2 border-slate-100 text-slate-400 px-8 py-5 rounded-2xl font-black text-base md:text-lg hover:border-purple-200 hover:text-purple-600 transition-all">
+                        初めて利用される方へ
                     </button>
                 </div>
             </div>
@@ -123,65 +103,49 @@
         <div class="container mx-auto px-8">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
                 <div class="reveal">
-                    <h3 class="text-4xl font-black tracking-tighter mb-4">装置を「目的」で絞り込む</h3>
-                    <p class="text-slate-400 font-medium font-serif">左メニューの呪縛を解き放つ、直感的なフィルタリング。</p>
+                    <h3 class="text-4xl font-black tracking-tighter mb-4 italic">Device Search</h3>
+                    <p class="text-slate-400 font-medium">左メニューの呪縛から解放。目的（動詞）で絞り込む直感的トリアージ。</p>
                 </div>
                 <div class="flex flex-wrap gap-3 reveal">
                     <button onclick="filterCards('all')"
-                        class="filter-btn active bg-hagi-purple text-white px-8 py-3 rounded-xl font-bold transition shadow-xl">ALL</button>
+                        class="filter-btn active bg-hagi-purple text-white px-8 py-3 rounded-xl font-bold transition shadow-xl">すべて</button>
                     <button onclick="filterCards('visual')"
-                        class="filter-btn bg-white border border-slate-200 px-8 py-3 rounded-xl font-bold hover:bg-slate-50 transition">🔬
-                        視る(観察)</button>
+                        class="filter-btn bg-white border border-slate-200 px-8 py-3 rounded-xl font-bold hover:bg-slate-50 transition">🔬 視る(観察)</button>
                     <button onclick="filterCards('measure')"
-                        class="filter-btn bg-white border border-slate-200 px-8 py-3 rounded-xl font-bold hover:bg-slate-50 transition">🧪
-                        測る(分析)</button>
+                        class="filter-btn bg-white border border-slate-200 px-8 py-3 rounded-xl font-bold hover:bg-slate-50 transition">🧪 測る(分析)</button>
                     <button onclick="filterCards('make')"
-                        class="filter-btn bg-white border border-slate-200 px-8 py-3 rounded-xl font-bold hover:bg-slate-50 transition">🛠️
-                        創る(試作)</button>
+                        class="filter-btn bg-white border border-slate-200 px-8 py-3 rounded-xl font-bold hover:bg-slate-50 transition">🛠️ 創る(加工)</button>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative min-h-[450px]"
-                id="card-container">
-                <div class="card-item bg-white p-10 rounded-[40px] shadow-sm hover:shadow-2xl transition-all border border-slate-100 group"
-                    data-category="visual">
-                    <div
-                        class="w-14 h-14 bg-purple-50 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
-                        🔬</div>
-                    <h4 class="text-2xl font-black mb-4 group-hover:text-purple-700 transition-colors">究極の顕微鏡</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-8">原子の世界をリアルタイムで。Nature級のデータ取得を支える、学内最高峰の分解能。
-                    </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative min-h-[450px]" id="card-container">
+                <div class="card-item bg-white p-10 rounded-[40px] shadow-sm hover:shadow-2xl transition-all border border-slate-100 group" data-category="visual">
+                    <div class="w-14 h-14 bg-purple-50 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">🔬</div>
+                    <h4 class="text-2xl font-black mb-4 group-hover:text-purple-700 transition-colors">収差補正透過電子顕微鏡</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-8">原子一つ一つの並びを直接観察。ナノ材料の界面評価において、世界トップレベルの解像度を提供します。</p>
                     <div class="flex items-center justify-between pt-6 border-t border-slate-50">
-                        <span class="text-[10px] font-black tracking-widest text-emerald-500 uppercase">● Ready to
-                            use</span>
-                        <button class="text-xs font-black hover:underline tracking-tighter uppercase">Reserve →</button>
+                        <span class="text-[10px] font-black tracking-widest text-emerald-500 uppercase">● Ready to use</span>
+                        <button class="text-xs font-black hover:underline tracking-tighter uppercase">予約・詳細 →</button>
                     </div>
                 </div>
 
-                <div class="card-item bg-white p-10 rounded-[40px] shadow-sm hover:shadow-2xl transition-all border border-slate-100 group"
-                    data-category="measure">
-                    <div
-                        class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
-                        🧪</div>
-                    <h4 class="text-2xl font-black mb-4 group-hover:text-blue-700 transition-colors">超精密NMR</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-8">溶液中の分子挙動を逃さない。創薬・材料開発の現場で「真実」を測る。</p>
+                <div class="card-item bg-white p-10 rounded-[40px] shadow-sm hover:shadow-2xl transition-all border border-slate-100 group" data-category="measure">
+                    <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">🧪</div>
+                    <h4 class="text-2xl font-black mb-4 group-hover:text-blue-700 transition-colors">高分解能核磁気共鳴装置(NMR)</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-8">生体高分子から新型電池材料まで。複雑な分子構造を解き明かす、本学研究の心臓部。</p>
                     <div class="flex items-center justify-between pt-6 border-t border-slate-50">
                         <span class="text-[10px] font-black tracking-widest text-amber-500 uppercase">▲ 混雑中</span>
-                        <button class="text-xs font-black hover:underline tracking-tighter uppercase">Detail →</button>
+                        <button class="text-xs font-black hover:underline tracking-tighter uppercase">予約・詳細 →</button>
                     </div>
                 </div>
 
-                <div class="card-item bg-white p-10 rounded-[40px] shadow-sm hover:shadow-2xl transition-all border border-slate-100 group"
-                    data-category="make">
-                    <div
-                        class="w-14 h-14 bg-orange-50 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
-                        🛠️</div>
-                    <h4 class="text-2xl font-black mb-4 group-hover:text-orange-700 transition-colors">金属3Dプリンタ</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-8">宇宙を創る造形力。複雑な冷却構造を持つエンジンの試作も、ここで完結。</p>
+                <div class="card-item bg-white p-10 rounded-[40px] shadow-sm hover:shadow-2xl transition-all border border-slate-100 group" data-category="make">
+                    <div class="w-14 h-14 bg-orange-50 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">🛠️</div>
+                    <h4 class="text-2xl font-black mb-4 group-hover:text-orange-700 transition-colors">電子ビーム描画装置</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-8">次世代半導体・量子デバイスの試作に。ナノレベルの微細パターン形成を実現します。</p>
                     <div class="flex items-center justify-between pt-6 border-t border-slate-50">
-                        <span class="text-[10px] font-black tracking-widest text-emerald-500 uppercase">● Ready to
-                            use</span>
-                        <button class="text-xs font-black hover:underline tracking-tighter uppercase">Reserve →</button>
+                        <span class="text-[10px] font-black tracking-widest text-emerald-500 uppercase">● Ready to use</span>
+                        <button class="text-xs font-black hover:underline tracking-tighter uppercase">予約・詳細 →</button>
                     </div>
                 </div>
             </div>
@@ -193,8 +157,8 @@
             <div class="text-center max-w-3xl mx-auto mb-20 reveal">
                 <h3 class="text-5xl font-black tracking-tighter mb-6 italic">CFC Insights</h3>
                 <p class="text-slate-400 font-medium">
-                    「サイト更新」なんて項目は捨てました。ここにあるのは、<br>
-                    このポータルから生まれた**「知の最前線」**です。
+                    「事務的な更新情報」ではなく、ここから生まれた**「知の最前線」**を発信。<br>
+                    共用設備がどのようにイノベーションに貢献したかを可視化します。
                 </p>
             </div>
 
@@ -203,25 +167,18 @@
                     <img src="https://portal.cfc.tohoku.ac.jp/images/top_images/main_visual_01.jpg"
                         class="w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-700">
                     <div class="absolute inset-0 p-12 flex flex-col justify-end">
-                        <span
-                            class="bg-purple-600 text-white text-[10px] font-black px-4 py-1.5 rounded-full w-fit mb-6 uppercase tracking-widest">Success
-                            Story</span>
-                        <h4 class="text-4xl text-white font-black leading-tight mb-6">全固体電池の寿命を2倍に。<br>工学研究科
-                            〇〇教授の「視点」を支えた一台。</h4>
-                        <button
-                            class="text-white font-bold border-b-2 border-white/30 hover:border-white transition-all w-fit">Read
-                            the full story</button>
+                        <span class="bg-purple-600 text-white text-[10px] font-black px-4 py-1.5 rounded-full w-fit mb-6 uppercase tracking-widest">Research Outcome</span>
+                        <h4 class="text-4xl text-white font-black leading-tight mb-6">全固体電池の寿命を大幅改善。<br>計測支援が導いた、材料設計のブレイクスルー。</h4>
+                        <button class="text-white font-bold border-b-2 border-white/30 hover:border-white transition-all w-fit">成果の詳細を読む</button>
                     </div>
                 </div>
                 <div class="md:col-span-4 bg-purple-50 rounded-[40px] p-10 flex flex-col justify-between">
                     <div>
-                        <span class="text-[10px] font-black text-purple-600 uppercase tracking-widest mb-6 block">New
-                            Asset</span>
-                        <h4 class="text-2xl font-black mb-4">多元研に導入。<br>新型XRD説明会。</h4>
-                        <p class="text-slate-500 text-sm font-medium">2026.02.15 開催 / オンライン併用</p>
+                        <span class="text-[10px] font-black text-purple-600 uppercase tracking-widest mb-6 block">Latest Facility</span>
+                        <h4 class="text-2xl font-black mb-4">次世代放射光施設<br>「NanoTerasu」連携開始</h4>
+                        <p class="text-slate-500 text-sm font-medium">学内枠の利用申請・技術相談プロセスのガイドを公開しました。</p>
                     </div>
-                    <button
-                        class="bg-white text-purple-700 font-black py-4 rounded-2xl shadow-sm hover:shadow-lg transition">参加を予約する</button>
+                    <button class="bg-white text-purple-700 font-black py-4 rounded-2xl shadow-sm hover:shadow-lg transition">ガイドを確認する</button>
                 </div>
             </div>
         </div>
@@ -231,24 +188,19 @@
         <div class="container mx-auto px-8 relative z-10">
             <div class="max-w-4xl mx-auto text-center reveal">
                 <h3 class="text-4xl md:text-5xl font-black tracking-tighter mb-12 italic">AI & Human Partnership</h3>
-                <div class="grid md:grid-cols-2 gap-8">
+                <div class="grid md:grid-cols-2 gap-8 text-left">
                     <div class="bg-white/5 border border-white/10 p-10 rounded-[40px] hover:bg-white/10 transition">
                         <div class="text-4xl mb-6">🤖</div>
                         <h4 class="text-xl font-black mb-4 text-purple-400">事務手続コンシェルジュ</h4>
-                        <p class="text-slate-400 text-sm mb-8 leading-relaxed">Microsoft
-                            Copilot連携。ログイン・料金・申請書類の「どうすれば？」を24時間即答。</p>
-                        <button
-                            class="text-xs font-black uppercase tracking-widest border border-white/20 px-6 py-3 rounded-full hover:bg-white hover:text-black transition">Open
-                            Copilot Window</button>
+                        <p class="text-slate-400 text-sm mb-8 leading-relaxed">「ログインできない」「支払方法を知りたい」といった事務的な疑問に24時間対応。外部リンクの迷路を解消します。</p>
+                        <button class="text-[10px] font-black uppercase tracking-widest border border-white/20 px-6 py-3 rounded-full hover:bg-white hover:text-black transition">Copilotを起動する</button>
                     </div>
                     <div class="bg-hagi-purple p-10 rounded-[40px] shadow-2xl">
                         <div class="text-4xl mb-6">🧠</div>
                         <h4 class="text-xl font-black mb-4">戦略的技術参謀 (Gem)</h4>
-                        <p class="text-purple-100 text-sm mb-8 leading-relaxed">「界面の剥離を防ぎたい」「Plan
-                            A/Bを組んでくれ」といった専門的な技術相談を承ります。</p>
-                        <button
-                            class="bg-white text-hagi-purple font-black px-8 py-4 rounded-2xl hover:scale-105 transition">Ask
-                            the Expert AI</button>
+                        <p class="text-purple-100 text-sm mb-8 leading-relaxed">「界面の剥離を防ぎたい」「Plan A/Bを組んでくれ」といった高度な相談に、専門知を統合してアドバイスします。</p>
+                        <a href="https://gemini.google.com/gem/17o6CxfOldR2R34iP-dxj569wuZ57mHAX?usp=sharing" target="_blank"
+                            class="bg-white text-hagi-purple font-black px-8 py-4 rounded-2xl hover:scale-105 transition block text-center">技術相談を開始する</a>
                     </div>
                 </div>
             </div>
@@ -257,11 +209,21 @@
     </section>
 
     <footer class="py-12 text-center text-slate-400 text-[9px] tracking-[0.4em] font-black uppercase">
-        © 2026 TOHOKU UNIV. CFC - Rethinking the Future of Research.
+        © 2026 東北大学 コアファシリティ統括センター | Rethinking Research Infrastructure
     </footer>
 
     <script>
-        // Reveal logic
+        // ハンバーガーメニューの開閉
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        function toggleMenu() {
+            mobileMenu.classList.toggle('active');
+        }
+        
+        menuBtn.addEventListener('click', toggleMenu);
+
+        // Revealアニメーション
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) entry.target.classList.add('active');
@@ -269,7 +231,7 @@
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // Shupa! Filter logic
+        // フィルタリング
         function filterCards(category) {
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('bg-hagi-purple', 'text-white', 'shadow-xl');
@@ -289,5 +251,4 @@
         }
     </script>
 </body>
-
 </html>
