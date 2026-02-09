@@ -19,14 +19,8 @@
         .glass-nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
         .ai-shadow { box-shadow: 0 10px 40px -10px rgba(82, 45, 128, 0.2); }
         
-        /* ハンバーガーメニュー用のスタイル */
-        #mobile-menu {
-            transition: transform 0.3s ease-in-out;
-            transform: translateY(-100%);
-        }
-        #mobile-menu.active {
-            transform: translateY(0);
-        }
+        #mobile-menu { transition: transform 0.3s ease-in-out; transform: translateY(-100%); }
+        #mobile-menu.active { transform: translateY(0); }
     </style>
 </head>
 
@@ -81,8 +75,7 @@
                     その仮説を、<br><span class="gradient-text">確信に変える。</span>
                 </h2>
                 <p class="text-slate-500 text-lg md:text-xl mb-12 leading-relaxed max-w-xl font-medium">
-                    東北大学の膨大な研究基盤。どれを使うのが正解か？<br>
-                    戦略的技術参謀（AI）が、あなたの研究を加速させる「最短ルート」をご提案します。
+                    東北大学の膨大な研究基盤から、<br>あなたに最適な設備を「最短ルート」でご提案します。
                 </p>
                 <div class="flex flex-wrap gap-5">
                     <a href="https://gemini.google.com/gem/17o6CxfOldR2R34iP-dxj569wuZ57mHAX?usp=sharing" target="_blank"
@@ -104,7 +97,7 @@
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
                 <div class="reveal">
                     <h3 class="text-4xl font-black tracking-tighter mb-4 italic">Device Search</h3>
-                    <p class="text-slate-400 font-medium">左メニューの呪縛から解放。目的（動詞）で絞り込む直感的トリアージ。</p>
+                    <p class="text-slate-400 font-medium">より直感的なメニュー構成への変更をご提案します</p>
                 </div>
                 <div class="flex flex-wrap gap-3 reveal">
                     <button onclick="filterCards('all')"
@@ -128,7 +121,6 @@
                         <button class="text-xs font-black hover:underline tracking-tighter uppercase">予約・詳細 →</button>
                     </div>
                 </div>
-
                 <div class="card-item bg-white p-10 rounded-[40px] shadow-sm hover:shadow-2xl transition-all border border-slate-100 group" data-category="measure">
                     <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">🧪</div>
                     <h4 class="text-2xl font-black mb-4 group-hover:text-blue-700 transition-colors">高分解能核磁気共鳴装置(NMR)</h4>
@@ -138,7 +130,6 @@
                         <button class="text-xs font-black hover:underline tracking-tighter uppercase">予約・詳細 →</button>
                     </div>
                 </div>
-
                 <div class="card-item bg-white p-10 rounded-[40px] shadow-sm hover:shadow-2xl transition-all border border-slate-100 group" data-category="make">
                     <div class="w-14 h-14 bg-orange-50 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">🛠️</div>
                     <h4 class="text-2xl font-black mb-4 group-hover:text-orange-700 transition-colors">電子ビーム描画装置</h4>
@@ -156,10 +147,7 @@
         <div class="container mx-auto px-8">
             <div class="text-center max-w-3xl mx-auto mb-20 reveal">
                 <h3 class="text-5xl font-black tracking-tighter mb-6 italic">CFC Insights</h3>
-                <p class="text-slate-400 font-medium">
-                    「事務的な更新情報」ではなく、ここから生まれた**「知の最前線」**を発信。<br>
-                    共用設備がどのようにイノベーションに貢献したかを可視化します。
-                </p>
+                <p class="text-slate-400 font-medium">進捗情報やニュースなどを直感的に統合します</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-12 gap-6 reveal">
@@ -193,14 +181,14 @@
                         <div class="text-4xl mb-6">🤖</div>
                         <h4 class="text-xl font-black mb-4 text-purple-400">事務手続コンシェルジュ</h4>
                         <p class="text-slate-400 text-sm mb-8 leading-relaxed">「ログインできない」「支払方法を知りたい」といった事務的な疑問に24時間対応。外部リンクの迷路を解消します。</p>
-                        <button class="text-[10px] font-black uppercase tracking-widest border border-white/20 px-6 py-3 rounded-full hover:bg-white hover:text-black transition">Copilotを起動する</button>
+                        <button class="text-[10px] font-black uppercase tracking-widest border border-white/20 px-6 py-3 rounded-full hover:bg-white hover:text-black transition">チャットボットを起動する</button>
                     </div>
                     <div class="bg-hagi-purple p-10 rounded-[40px] shadow-2xl">
                         <div class="text-4xl mb-6">🧠</div>
-                        <h4 class="text-xl font-black mb-4">戦略的技術参謀 (Gem)</h4>
-                        <p class="text-purple-100 text-sm mb-8 leading-relaxed">「界面の剥離を防ぎたい」「Plan A/Bを組んでくれ」といった高度な相談に、専門知を統合してアドバイスします。</p>
+                        <h4 class="text-xl font-black mb-4 text-purple-200">使いたい機器の絞り込み（学内用）</h4>
+                        <p class="text-purple-100 text-sm mb-8 leading-relaxed">「界面の剥離を防ぎたい」「分析プランを立てたい」といった高度な相談に、専門知を統合してアドバイスします。</p>
                         <a href="https://gemini.google.com/gem/17o6CxfOldR2R34iP-dxj569wuZ57mHAX?usp=sharing" target="_blank"
-                            class="bg-white text-hagi-purple font-black px-8 py-4 rounded-2xl hover:scale-105 transition block text-center">技術相談を開始する</a>
+                            class="bg-white text-slate-900 font-black px-8 py-4 rounded-2xl hover:scale-105 transition block text-center shadow-lg">技術相談を開始する</a>
                     </div>
                 </div>
             </div>
@@ -209,29 +197,20 @@
     </section>
 
     <footer class="py-12 text-center text-slate-400 text-[9px] tracking-[0.4em] font-black uppercase">
-        © 2026 東北大学 コアファシリティ統括センター | Rethinking Research Infrastructure
+        © 2026 東北大学 コアファシリティ統括センター | Tohoku University Core Facility Center
     </footer>
 
     <script>
-        // ハンバーガーメニューの開閉
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-        
-        function toggleMenu() {
-            mobileMenu.classList.toggle('active');
-        }
-        
+        function toggleMenu() { mobileMenu.classList.toggle('active'); }
         menuBtn.addEventListener('click', toggleMenu);
 
-        // Revealアニメーション
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
-            });
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // フィルタリング
         function filterCards(category) {
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('bg-hagi-purple', 'text-white', 'shadow-xl');
@@ -239,14 +218,10 @@
             });
             event.currentTarget.classList.add('bg-hagi-purple', 'text-white', 'shadow-xl');
             event.currentTarget.classList.remove('bg-white', 'text-slate-900', 'border-slate-200');
-
             const cards = document.querySelectorAll('.card-item');
             cards.forEach(card => {
-                if (category === 'all' || card.dataset.category === category) {
-                    card.classList.remove('card-hidden');
-                } else {
-                    card.classList.add('card-hidden');
-                }
+                if (category === 'all' || card.dataset.category === category) { card.classList.remove('card-hidden'); }
+                else { card.classList.add('card-hidden'); }
             });
         }
     </script>
